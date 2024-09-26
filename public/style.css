@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    text-align: center;
+}
+
+.touch-area {
+    width: 80vw;
+    height: 60vh;
+    border: 2px dashed #ff69b4;
+    position: relative;
+    margin: 20px auto;
+    overflow: hidden;
+    background-color: white;
+}
+
+.heart {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    animation: pop 0.5s forwards;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
