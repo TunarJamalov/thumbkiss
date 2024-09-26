@@ -20,11 +20,20 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('touch', data); // Tüm kullanıcılara yay
     });
 
+    // Kullanıcı ekranda basılı tuttuğunda
+    socket.on('touchStart', () => {
+        socket.broadcast.emit('touchStart'); // Diğer kullanıcılara bildirim gönder
+    });
+
+    // Kullanıcı elini çektiğinde
+    socket.on('touchEnd', () => {
+        socket.broadcast.emit('touchEnd'); // Diğer kullanıcılara bildirim gönder
+    });
+
     socket.on('disconnect', () => {
         console.log('a user disconnected');
     });
 });
-
 
 server.listen(3000, () => {
     console.log('listening on *:3000');
