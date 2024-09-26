@@ -4,22 +4,31 @@ const heart = document.getElementById('heart');
 const togetherHeart = document.getElementById('togetherHeart');
 
 let isTouching = false;
+let touchCount = 0; // Dokunma sayısını takip etmek için
 
 // Kullanıcı ekranda basılı tuttuğunda
 touchArea.addEventListener('mousedown', () => {
-    isTouching = true;
-    socket.emit('touchStart'); // Sunucuya bildirim gönder
+    if (!isTouching) {
+        isTouching = true;
+        touchCount++; // Dokunma sayısını artır
+        socket.emit('touchStart'); // Sunucuya bildirim gönder
+    }
 });
 
 // Kullanıcı ekrandan elini çektiğinde
 touchArea.addEventListener('mouseup', () => {
-    isTouching = false;
-    socket.emit('touchEnd'); // Sunucuya bildirim gönder
+    if (isTouching) {
+        isTouching = false;
+        touchCount--; // Dokunma sayısını azalt
+        socket.emit('touchEnd'); // Sunucuya bildirim gönder
+    }
 });
 
 // Diğer kullanıcının dokunuşunu gösterme
 socket.on('touchStart', () => {
-    showTogetherHeart();
+    if (touchCount === 0) { // Eğer henüz başka biri basılı tutmuyorsa
+        showTogetherHeart();
+    }
 });
 
 socket.on('touchEnd', () => {
